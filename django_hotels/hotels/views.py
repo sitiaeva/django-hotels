@@ -44,8 +44,8 @@ def rooms_list_with_sold_out_sign_view(request):
             dates."""
 
     filter_for_reservations = FilteredRelation('reservations', condition=~Q(
-        Q(reservations__end__lte=date.today())
-        | Q(reservations__start__gte=date.today())))
+        Q(reservations__end__lt=date.today())
+        | Q(reservations__start__gt=date.today())))
 
     case_for_sold_out = Case(When(filtered_reservations__isnull=True, then=Value('False')), default=Value('True'))
 
